@@ -1,9 +1,8 @@
-/* body {
+/*Import google fonts here*/
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* background-color: blue; */
-/* } */
-*/ .App {
-  /* background-color: red; */
 }

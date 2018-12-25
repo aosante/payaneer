@@ -1,10 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import Clients from '../clients/Clients';
+
+// import PropTypes from 'prop-types';
 
 const Dashboard = props => {
   return (
     <div>
-      <h1 />
+      <Clients />
     </div>
   );
 };

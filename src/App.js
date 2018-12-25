@@ -2,22 +2,31 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Dashboard from './components/layout/Dashboard';
-
+import styled from 'styled-components';
 import './App.css';
+
+const Main = styled.main`
+  height: 100%;
+  display: flex;
+`;
+
+const Container = styled.div`
+  flex: 5;
+  background-color: rgb(233, 236, 239);
+`;
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <Main>
           <Navbar />
-          <div className="container">
+          <Container>
             <Switch>
               <Route exact path="/" component={Dashboard} />
-              {/* <Route exact path="/" component={Dashboard} /> */}
             </Switch>
-          </div>
-        </div>
+          </Container>
+        </Main>
       </Router>
     );
   }
