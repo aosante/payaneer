@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const StyledTable = styled.table`
+  background-color: white;
+`;
 
 class Clients extends Component {
   render() {
@@ -15,14 +20,14 @@ class Clients extends Component {
     ];
     if (clients) {
       return (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div className="container">
             <div className="section-1">
               <h2>Clients</h2>
             </div>
             <div className="section-2" />
           </div>
-          <table>
+          <table style={{ backgroundColor: 'white' }}>
             <thead>
               <tr>
                 <th>Name</th>

@@ -13,6 +13,7 @@ const Main = styled.main`
 const Container = styled.div`
   flex: 5;
   background-color: rgb(233, 236, 239);
+  padding: 2em;
 `;
 
 class App extends Component {

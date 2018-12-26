@@ -10,14 +10,23 @@ const Nav = styled.nav`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 1.4em;
+  padding: 0 0 1.4em 0;
   .link {
+    text-align: center;
+    padding: 2rem;
     color: white;
     font-family: 'Indie Flower', cursive;
     font-size: 3em;
+    width: 100%;
+    margin: 0;
+    background-color: red;
   }
   div {
     display: block;
+  }
+  #navbarMain {
+    transform: translateX(-2em);
+    margin-left: -1em;
   }
   #navbarMain li {
     list-style-type: none;
@@ -26,7 +35,7 @@ const Nav = styled.nav`
   a {
     color: white;
     text-decoration: none;
-    font-size: 1.35em;
+    font-size: 1.2em;
   }
 `;
 
