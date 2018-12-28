@@ -65,7 +65,7 @@ class Navbar extends Component {
           <ul>
             <li>
               <Link to="/">
-                <i class="fa fa-book" style={{ marginRight: '.5em' }} />
+                <i className="fa fa-book" style={{ marginRight: '.5em' }} />
                 Dashboard
               </Link>
             </li>

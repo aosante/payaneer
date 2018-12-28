@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const addButtonStyle = {
-  backgroundColor: 'rgb(110, 118, 127)',
+  backgroundColor: 'rgb(72, 160, 181)',
   color: '#fff',
   padding: '0.7rem',
   textDecoration: 'none',
@@ -30,7 +30,6 @@ const StyledTable = styled.table`
     text-align: center;
     border-bottom: 2px solid #eee;
   }
-
   .details--button {
     background-color: rgb(110, 118, 127);
     color: #fff;
@@ -38,8 +37,10 @@ const StyledTable = styled.table`
     text-decoration: none;
     border-radius: 3px;
   }
+  .details--button:hover {
+    color: rgb(72, 160, 118);
+  }
 `;
-//110, 118, 127
 class Clients extends Component {
   render() {
     const clients = [
@@ -64,8 +65,8 @@ class Clients extends Component {
       return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div className="title">
-            <h2>
-              <i class="fa fa-users" style={{ marginRight: '1em' }} />
+            <h2 style={{ fontSize: '2em' }}>
+              <i className="fa fa-users" style={{ marginRight: '.5em' }} />
               Clients
             </h2>
           </div>
