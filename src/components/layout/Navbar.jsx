@@ -17,9 +17,18 @@ const Nav = styled.nav`
     color: white;
     font-family: 'Indie Flower', cursive;
     font-size: 3em;
-    width: 100%;
+    width: 85%;
     margin: 0;
-    background-color: red;
+    position: relative;
+  }
+  .link::after {
+    content: '';
+    background-color: rgba(255, 255, 255, 0.55);
+    width: 170px;
+    height: 2px;
+    position: absolute;
+    left: 1.2em;
+    top: 2.7em;
   }
   div {
     display: block;
@@ -27,6 +36,7 @@ const Nav = styled.nav`
   #navbarMain {
     transform: translateX(-2em);
     margin-left: -1em;
+    margin-top: 2em;
   }
   #navbarMain li {
     list-style-type: none;
@@ -54,7 +64,10 @@ class Navbar extends Component {
         <div id="navbarMain">
           <ul>
             <li>
-              <Link to="/">Dashboard</Link>
+              <Link to="/">
+                <i class="fa fa-book" style={{ marginRight: '.5em' }} />
+                Dashboard
+              </Link>
             </li>
           </ul>
         </div>
