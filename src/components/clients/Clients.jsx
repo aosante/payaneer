@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 const addButtonStyle = {
   backgroundColor: 'rgb(72, 160, 181)',
@@ -36,31 +40,21 @@ const StyledTable = styled.table`
     padding: 0.4rem;
     text-decoration: none;
     border-radius: 3px;
+    border: 1px solid rgb(110, 118, 127);
   }
   .details--button:hover {
-    color: rgb(72, 160, 118);
+    color: rgb(110, 118, 127);
+    background-color: #fff;
+    border: 1px solid rgb(110, 118, 127);
   }
 `;
 class Clients extends Component {
+  componentWillMount() {
+    console.log(this.props);
+  }
   render() {
-    const clients = [
-      {
-        id: '1',
-        firstName: 'Kevin',
-        lastName: 'Johnson',
-        email: 'kj@gmail.com',
-        phone: '444-444-4444',
-        balance: '100'
-      },
-      {
-        id: '2',
-        firstName: 'Amelia',
-        lastName: 'Hunt',
-        email: 'ah@gmail.com',
-        phone: '888-888-8888',
-        balance: '130'
-      }
-    ];
+    console.log(this.props);
+    const { clients } = this.props;
     if (clients) {
       return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -113,4 +107,14 @@ class Clients extends Component {
   }
 }
 
-export default Clients;
+Clients.propTypes = {
+  firestore: PropTypes.object.isRequired,
+  clients: PropTypes.array
+};
+
+export default compose(
+  firestoreConnect([{ collection: 'clients' }]),
+  connect((state, props) => ({
+    clients: state.firestore.data.clients
+  }))
+)(Clients);
