@@ -1,9 +1,8 @@
 import { createStore, combineReducers, compose } from 'redux';
 import firebase from 'firebase';
-import { reduxFirestore, firestoreReducer } from 'redux-firestore';
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
+import { reduxFirestore, firestoreReducer } from 'redux-firestore';
 import 'firebase/firestore';
-
 //Custom reducers
 //@todo
 
@@ -19,15 +18,15 @@ const firebaseConfig = {
 // react-redux-firebase config
 const rrfConfig = {
   userProfile: 'users',
-  useFirestoreForProfile: true
+  useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
 };
 
-// Initialize firebase instance
+// Init firebase instance
 firebase.initializeApp(firebaseConfig);
-
-// Initialize other services on firebase instance
-//asign it to a const named firestore
-firebase.firestore();
+// Init firestore
+// const firestore = firebase.firestore();
+// const settings = { timestampsInSnapshots: true };
+// firestore.settings(settings);
 
 // Add reactReduxFirebase enhancer when making store creator
 const createStoreWithFirebase = compose(
@@ -35,14 +34,15 @@ const createStoreWithFirebase = compose(
   reduxFirestore(firebase)
 )(createStore);
 
-// Add firebase to reducers
 const rootReducer = combineReducers({
   firebase: firebaseReducer,
   firestore: firestoreReducer
 });
 
-// Create store with reducers and initial state
+// Create initial state
 const initialState = {};
+
+// Create store
 const store = createStoreWithFirebase(
   rootReducer,
   initialState,

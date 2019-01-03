@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, firestoreConnect } from 'react-redux-firebase';
 
 const addButtonStyle = {
   backgroundColor: 'rgb(72, 160, 181)',
@@ -53,7 +53,6 @@ class Clients extends Component {
     console.log(this.props);
   }
   render() {
-    console.log(this.props);
     const { clients } = this.props;
     if (clients) {
       return (
@@ -108,13 +107,13 @@ class Clients extends Component {
 }
 
 Clients.propTypes = {
-  firestore: PropTypes.object.isRequired,
+  firestore: PropTypes.object,
   clients: PropTypes.array
 };
 
 export default compose(
   firestoreConnect([{ collection: 'clients' }]),
   connect((state, props) => ({
-    clients: state.firestore.data.clients
+    clients: state.firestore.ordered.clients
   }))
 )(Clients);
