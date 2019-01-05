@@ -5,18 +5,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import Spinner from '../layout/Spinner';
 
-const addButtonStyle = {
-  backgroundColor: 'rgb(72, 160, 181)',
-  color: '#fff',
-  padding: '0.7rem',
-  textDecoration: 'none',
-  borderRadius: 3,
-  position: 'relative',
-  top: '0',
-  float: 'right',
-  marginBottom: '1em'
-};
+const AddButton = styled.button`
+  background-color: rgb(72, 160, 181);
+  color: #fff;
+  padding: 0.9rem;
+  border-radius: 3px;
+  float: right;
+  margin-bottom: 2em;
+  font-size: 1.12em;
+`;
 
 const StyledTable = styled.table`
   background-color: white;
@@ -49,11 +48,23 @@ const StyledTable = styled.table`
   }
 `;
 class Clients extends Component {
-  componentWillMount() {
-    console.log(this.props);
+  state = {
+    totalOwed: null
+  };
+
+  //calculate balance as clients come in
+  static getDerivedStateFromProps(props, state) {
+    const { clients } = props;
+    if (clients) {
+      const total = clients.reduce((total, client) => {
+        return total + parseFloat(client.balance.toString());
+      }, 0);
+      return { totalOwed: total };
+    }
   }
   render() {
     const { clients } = this.props;
+    const { totalOwed } = this.state;
     if (clients) {
       return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -63,9 +74,15 @@ class Clients extends Component {
               Clients
             </h2>
           </div>
+          <h1 style={{ textAlign: 'right', marginBottom: '1em' }}>
+            Total Owed:{'  '}{' '}
+            <span style={{ color: 'green' }}>
+              ${parseFloat(totalOwed).toFixed(2)}
+            </span>
+          </h1>
           <div className="button--container" style={{ float: 'right' }}>
-            <Link to={'/'} className="add--button" style={addButtonStyle}>
-              New contact
+            <Link to={'/'} className="add--button">
+              <AddButton>New Client</AddButton>
             </Link>
           </div>
 
@@ -101,13 +118,13 @@ class Clients extends Component {
         </div>
       );
     } else {
-      return <h1>Loading...</h1>;
+      return <Spinner />;
     }
   }
 }
 
 Clients.propTypes = {
-  firestore: PropTypes.object,
+  firestore: PropTypes.object.isRequired,
   clients: PropTypes.array
 };
 
