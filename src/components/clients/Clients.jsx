@@ -15,6 +15,11 @@ const AddButton = styled.button`
   float: right;
   margin-bottom: 2em;
   font-size: 1.12em;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.012);
+    opacity: 0.8;
+  }
 `;
 
 const StyledTable = styled.table`
@@ -61,6 +66,7 @@ class Clients extends Component {
       }, 0);
       return { totalOwed: total };
     }
+    return null;
   }
   render() {
     const { clients } = this.props;
@@ -81,7 +87,7 @@ class Clients extends Component {
             </span>
           </h1>
           <div className="button--container" style={{ float: 'right' }}>
-            <Link to={'/'} className="add--button">
+            <Link to={'/client/add'} className="add--button">
               <AddButton>New Client</AddButton>
             </Link>
           </div>
