@@ -77,7 +77,7 @@ class Clients extends Component {
           <div className="title">
             <h2 style={{ fontSize: '2em' }}>
               <i className="fa fa-users" style={{ marginRight: '.5em' }} />
-              Clients
+              Client List
             </h2>
           </div>
           <h1 style={{ textAlign: 'right', marginBottom: '1em' }}>
