@@ -32,8 +32,8 @@ const FormContainer = styled.div`
     margin: 0;
     padding: 0.5em 0;
     text-align: center;
-    border-radius: 9px;
-    border: 3px solid #eee;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 3px solid #eee;
   }
   form {
     display: flex;

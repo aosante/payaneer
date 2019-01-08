@@ -20,7 +20,7 @@ const BackButton = styled.button`
 `;
 
 const ClientDetailsContainer = styled.div`
-  height: 50vh;
+  height: 50%;
   margin-top: 4em;
   box-shadow: 0 0 15px 0 #000;
   border-radius: 5px;
@@ -61,8 +61,48 @@ class ClientDetails extends Component {
     balanceAmount: ''
   };
 
+  deleteClient = e => {
+    const { client, firestore, history } = this.props;
+    firestore
+      .delete({ collection: 'clients', doc: client.id })
+      .then(() => history.push('/'));
+  };
+
+  submitBalance = e => {
+    e.preventDefault();
+    const { balanceAmount } = this.state;
+    const { client, firestore } = this.props;
+    const clientUpdate = { balance: balanceAmount };
+    firestore.update({ collection: 'clients', doc: client.id }, clientUpdate);
+  };
+
   render() {
     const { client } = this.props;
+    const { showBalanceForm, balanceAmount } = this.state;
+    const balanceForm = (
+      <form onSubmit={this.submitBalance}>
+        <input
+          type="text"
+          placeholder="Add new balance"
+          value={balanceAmount}
+          onChange={e => this.setState({ balanceAmount: e.target.value })}
+          style={{ padding: '1em' }}
+        />
+        <button
+          type="submit"
+          style={{
+            padding: '1em',
+            color: '#fff',
+            backgroundColor: 'rgb(72, 160, 181)',
+            marginLeft: '.5em',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          Update Balance
+        </button>
+      </form>
+    );
     if (client) {
       return (
         <div>
@@ -78,7 +118,11 @@ class ClientDetails extends Component {
                 Edit
               </button>
             </Link>
-            <button className="delte-btn" style={DeleteBtnStyle}>
+            <button
+              className="delte-btn"
+              style={DeleteBtnStyle}
+              onClick={this.deleteClient}
+            >
               Delete
             </button>
           </div>
@@ -104,9 +148,16 @@ class ClientDetails extends Component {
                     showBalanceForm: !this.state.showBalanceForm
                   })
                 }
-                className="fa fa-edit"
-                style={{ cursor: 'pointer', marginLeft: '.5em' }}
+                className={
+                  this.state.showBalanceForm ? 'fa fa-times' : 'fa fa-edit'
+                }
+                style={{
+                  cursor: 'pointer',
+                  marginLeft: '.5em',
+                  fontSize: '1.2em'
+                }}
               />
+              {showBalanceForm ? balanceForm : null}
               <hr />
               <ul>
                 <li>
