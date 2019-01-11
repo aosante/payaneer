@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { UserIsAuthenticated, UserIsNotAuthenticated } from './helpers/auth';
+
 import { Provider } from 'react-redux';
 import store from './store';
+
+import Login from './components/auth/Login';
 import Navbar from './components/layout/Navbar';
 import Dashboard from './components/layout/Dashboard';
 import AddClient from './components/clients/AddClient';
+import EditClient from './components/clients/EditClient';
 import ClientDetails from './components/clients/ClientDetails';
+
 import styled from 'styled-components';
 import './App.css';
 
@@ -18,6 +24,9 @@ const Container = styled.div`
   flex: 5;
   background-color: rgb(233, 236, 239);
   padding: 2em;
+  margin-left: 16em;
+  min-height: 100vh;
+  height: auto;
 `;
 
 class App extends Component {
@@ -29,9 +38,27 @@ class App extends Component {
             <Navbar />
             <Container>
               <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route path="/client/add" component={AddClient} />
-                <Route path="/client/:id" component={ClientDetails} />
+                <Route
+                  exact
+                  path="/"
+                  component={UserIsAuthenticated(Dashboard)}
+                />
+                <Route
+                  path="/client/add"
+                  component={UserIsAuthenticated(AddClient)}
+                />
+                <Route
+                  path="/client/edit/:id"
+                  component={UserIsAuthenticated(EditClient)}
+                />
+                <Route
+                  path="/client/:id"
+                  component={UserIsAuthenticated(ClientDetails)}
+                />
+                <Route
+                  path="/login"
+                  component={UserIsNotAuthenticated(Login)}
+                />
               </Switch>
             </Container>
           </Main>

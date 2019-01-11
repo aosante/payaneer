@@ -38,6 +38,9 @@ const StyledTable = styled.table`
     text-align: center;
     border-bottom: 2px solid #eee;
   }
+  .table-row:hover {
+    background-color: rgb(233, 236, 239);
+  }
   .details--button {
     background-color: rgb(110, 118, 127);
     color: #fff;
@@ -103,7 +106,7 @@ class Clients extends Component {
             </thead>
             <tbody>
               {clients.map(client => (
-                <tr key={client.id}>
+                <tr key={client.id} className="table-row">
                   <td>
                     {client.firstName} {client.lastName}
                   </td>

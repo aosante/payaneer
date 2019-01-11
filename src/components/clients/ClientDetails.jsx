@@ -185,7 +185,8 @@ const EditBtnStyle = {
   color: '#fff',
   borderRadius: '5px',
   cursor: 'pointer',
-  fontSize: '1em'
+  fontSize: '1em',
+  marginRight: '.5em'
 };
 
 const DeleteBtnStyle = {

@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { firebaseConnect } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Nav = styled.nav`
   background-color: rgb(40, 53, 72);
-  height: 100vh;
+  position: fixed;
+  height: 110vh;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -34,27 +39,60 @@ const Nav = styled.nav`
     display: block;
   }
   #navbarMain {
-    transform: translateX(-2em);
-    margin-left: -1em;
     margin-top: 2em;
+    padding: 0;
   }
   #navbarMain li {
     list-style-type: none;
-    transform: translateX(-1em);
+    position: relative;
+    left: -2em;
   }
-  a {
+  a,
+  p {
     color: white;
     text-decoration: none;
-    font-size: 1.2em;
+    font-size: 1em;
+  }
+  .sub-section {
+    position: relative;
+    top: 27em;
+  }
+  .sub-section li {
+    border: 2px solid rgb(72, 160, 181);
+    text-align: center;
+    transform: translateX(0.5em);
+    border-radius: 5px;
+  }
+  .sub-section li:hover {
+    background-color: rgb(72, 160, 181);
   }
 `;
 
 class Navbar extends Component {
+  state = {
+    isAuth: false
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    const { auth } = props;
+    if (auth.uid) {
+      return { isAuth: true };
+    } else {
+      return { isAuth: false };
+    }
+  }
+
+  logOut = () => {
+    const { firebase } = this.props;
+    firebase.logout();
+  };
   render() {
+    const { isAuth } = this.state;
+    const { auth } = this.props;
     return (
       <Nav>
         <Link to="/" className="link">
-          Payaneer
+          Payoneer
         </Link>
         {/* <button
             type="button"
@@ -63,12 +101,27 @@ class Navbar extends Component {
           /> */}
         <div id="navbarMain">
           <ul>
-            <li>
-              <Link to="/">
-                <i className="fa fa-book" style={{ marginRight: '.5em' }} />
-                Dashboard
-              </Link>
-            </li>
+            {isAuth ? (
+              <div>
+                <li>
+                  <Link to="/">
+                    <i className="fa fa-book" style={{ marginRight: '.5em' }} />
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <p>
+                    <i className="fa fa-user" style={{ marginRight: '.5em' }} />
+                    {auth.email}
+                  </p>
+                </li>
+                <div className="sub-section">
+                  <li>
+                    <p onClick={this.logOut}>Log Out</p>
+                  </li>
+                </div>
+              </div>
+            ) : null}
           </ul>
         </div>
       </Nav>
@@ -76,4 +129,12 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  firebase: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+export default compose(
+  firebaseConnect(),
+  connect((state, props) => ({ auth: state.firebase.auth }))
+)(Navbar);
