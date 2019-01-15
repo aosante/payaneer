@@ -59,7 +59,7 @@ const Nav = styled.nav`
   }
   .sub-section {
     position: relative;
-    top: 27em;
+    top: 25em;
   }
   .sub-section li {
     border: 2px solid rgb(72, 160, 181);
@@ -114,6 +114,15 @@ class Navbar extends Component {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/settings">
+                    <i
+                      className="fa fa-cog"
+                      style={{ marginRight: '.5em', marginTop: '1em' }}
+                    />
+                    Settings
+                  </Link>
+                </li>
+                <li>
                   <p>
                     <i className="fa fa-user" style={{ marginRight: '.5em' }} />
                     {auth.email}
@@ -135,10 +144,14 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   firebase: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired
 };
 
 export default compose(
   firebaseConnect(),
-  connect((state, props) => ({ auth: state.firebase.auth }))
+  connect((state, props) => ({
+    auth: state.firebase.auth,
+    settings: state.settings
+  }))
 )(Navbar);

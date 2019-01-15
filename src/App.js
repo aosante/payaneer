@@ -11,6 +11,7 @@ import Dashboard from './components/layout/Dashboard';
 import AddClient from './components/clients/AddClient';
 import EditClient from './components/clients/EditClient';
 import ClientDetails from './components/clients/ClientDetails';
+import Settings from './components/settings/Settings';
 
 import styled from 'styled-components';
 import './App.css';
@@ -58,6 +59,10 @@ class App extends Component {
                 <Route
                   path="/login"
                   component={UserIsNotAuthenticated(Login)}
+                />
+                <Route
+                  path="/settings"
+                  component={UserIsAuthenticated(Settings)}
                 />
               </Switch>
             </Container>

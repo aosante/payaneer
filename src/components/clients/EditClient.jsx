@@ -114,6 +114,7 @@ class EditClient extends Component {
 
   render() {
     const { firstName, lastName, email, phone, balance } = this.state;
+    const { disableBalanceOnEdit } = this.props.settings;
     if (this.props.client) {
       return (
         <div
@@ -179,6 +180,7 @@ class EditClient extends Component {
                   name="balance"
                   value={balance}
                   onChange={this.onChange}
+                  disabled={disableBalanceOnEdit}
                 />
               </div>
               <button type="submit" className="submit-btn">
@@ -202,7 +204,8 @@ export default compose(
   firestoreConnect(props => [
     { collection: 'clients', storeAs: 'client', doc: props.match.params.id }
   ]),
-  connect(({ firestore: { ordered } }, props) => ({
-    client: ordered.client && ordered.client[0]
+  connect(({ firestore: { ordered }, settings }, props) => ({
+    client: ordered.client && ordered.client[0],
+    settings
   }))
 )(EditClient);

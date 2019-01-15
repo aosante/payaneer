@@ -136,7 +136,7 @@ Login.propTypes = {
 export default compose(
   firebaseConnect(),
   connect(
-    (state, props) => ({
+    state => ({
       notify: state.notify
     }),
     { notifyUser }
