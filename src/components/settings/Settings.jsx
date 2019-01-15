@@ -11,9 +11,41 @@ import styled from 'styled-components';
 
 //styled components
 const SettingsComponent = styled.div`
-  border: 2px solid red;
+  height: 100%;
   .container {
-    border: 2px solid purple;
+    box-shadow: 0 0 15px 0 #000;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 3em;
+    border-radius: 5px;
+    background-color: #eee;
+  }
+  .container h2 {
+    border-radius: 5px 5px 0px 0px;
+    background-color: rgb(40, 53, 72);
+    padding: 1em 0;
+    padding-left: 0.8em;
+    margin: 0;
+    color: #fff;
+    border-bottom: 2px solid #fff;
+    width: 98.5%;
+  }
+  .container form {
+    padding: 1em;
+    width: 97%;
+  }
+  .container form .form-group {
+    border-bottom: 2px solid #eaeaea;
+    padding: 1em;
+  }
+  .container form .form-group:last-child {
+    border-bottom: none;
+  }
+  .container form .form-group input {
+    font-size: 15em;
   }
 `;
 
@@ -61,7 +93,7 @@ class Settings extends Component {
           </BackButton>
         </Link>
         <div className="container">
-          <h1>Edit Settings</h1>
+          <h2>Edit Settings</h2>
           <form>
             <div className="form-group">
               <label htmlFor="allowRegistration">Allow Registration</label>

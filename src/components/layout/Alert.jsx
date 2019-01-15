@@ -14,6 +14,13 @@ const AlertComponent = styled.div`
     padding: 1em;
     border-radius: 5px;
   }
+  /* Succes class */
+  .success {
+    background-color: rgba(0, 230, 64, 0.4);
+    border: 1px solid green;
+    padding: 1em;
+    border-radius: 5px;
+  }
 `;
 
 const Alert = props => {
@@ -21,6 +28,8 @@ const Alert = props => {
   let className = '';
   if (messageType === 'error') {
     className = 'error';
+  } else if (messageType === 'success') {
+    className = 'success';
   }
   return (
     <AlertComponent>

@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 import Navbar from './components/layout/Navbar';
 import Dashboard from './components/layout/Dashboard';
 import AddClient from './components/clients/AddClient';
@@ -59,6 +60,10 @@ class App extends Component {
                 <Route
                   path="/login"
                   component={UserIsNotAuthenticated(Login)}
+                />
+                <Route
+                  path="/register"
+                  component={UserIsNotAuthenticated(Register)}
                 />
                 <Route
                   path="/settings"

@@ -74,24 +74,31 @@ const FormContainer = styled.div`
   }
 `;
 
-class Login extends Component {
+class Register extends Component {
   state = {
     email: '',
     password: ''
   };
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  componentWillMount() {
+    const { allowRegistration } = this.props.settings;
+    if (!allowRegistration) {
+      this.props.history.push('/');
+    }
+  }
 
   onSubmit = e => {
-    e.preventDefault();
     const { firebase, notifyUser } = this.props;
     const { email, password } = this.state;
+    e.preventDefault();
+    //Register with firebase
     firebase
-      .login({
-        email,
-        password
-      })
-      .catch(err => notifyUser('Wrong username or password', 'error'));
+      .createUser({ email, password })
+      .catch(err => notifyUser(err.message, 'error'));
   };
+
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
+
   render() {
     const { message, messageType } = this.props.notify;
     return (
@@ -99,8 +106,8 @@ class Login extends Component {
         <FormContainer>
           <h1>Welcome to Payoneer</h1>
           <form onSubmit={this.onSubmit}>
-            <i className="fa fa-user-circle" />
-            <h2>Login</h2>
+            <i className="fa fa-user-plus" />
+            <h2>Register</h2>
             <div className="input-group">
               <label htmlFor="email">Email</label>
               <input
@@ -124,7 +131,7 @@ class Login extends Component {
               />
             </div>
             <button type="submit" className="submit-btn">
-              Sign In
+              Sign Up
             </button>
           </form>
         </FormContainer>
@@ -134,7 +141,7 @@ class Login extends Component {
   }
 }
 
-Login.propTypes = {
+Register.propTypes = {
   firebase: PropTypes.object.isRequired,
   notify: PropTypes.object.isRequired,
   notifyUser: PropTypes.func.isRequired
@@ -144,8 +151,9 @@ export default compose(
   firebaseConnect(),
   connect(
     state => ({
-      notify: state.notify
+      notify: state.notify,
+      settings: state.settings
     }),
     { notifyUser }
   )
-)(Login);
+)(Register);

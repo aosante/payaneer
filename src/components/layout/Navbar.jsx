@@ -70,6 +70,18 @@ const Nav = styled.nav`
   .sub-section li:hover {
     background-color: rgb(72, 160, 181);
   }
+  .allow-registration {
+    padding: 3em;
+    margin-left: -7em;
+    position: relative;
+    top: -3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .allow-registration li {
+    margin-bottom: 1em;
+  }
 `;
 
 class Navbar extends Component {
@@ -77,7 +89,7 @@ class Navbar extends Component {
     isAuth: false
   };
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props) {
     const { auth } = props;
     if (auth.uid) {
       return { isAuth: true };
@@ -93,6 +105,7 @@ class Navbar extends Component {
   render() {
     const { isAuth } = this.state;
     const { auth } = this.props;
+    const { allowRegistration } = this.props.settings;
     return (
       <Nav>
         <Link to="/" className="link">
@@ -133,6 +146,28 @@ class Navbar extends Component {
                     <p onClick={this.logOut}>Log Out</p>
                   </li>
                 </div>
+              </div>
+            ) : null}
+            {allowRegistration && !isAuth ? (
+              <div className="allow-registration">
+                <li>
+                  <Link to="/login">
+                    <i
+                      className="fa fa-sign-in"
+                      style={{ marginRight: '.5em' }}
+                    />
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/register">
+                    <i
+                      className="fa fa-user-plus"
+                      style={{ marginRight: '.5em' }}
+                    />
+                    Register
+                  </Link>
+                </li>
               </div>
             ) : null}
           </ul>
