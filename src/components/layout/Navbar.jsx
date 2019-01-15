@@ -53,6 +53,10 @@ const Nav = styled.nav`
     text-decoration: none;
     font-size: 1em;
   }
+  a:hover {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
   .sub-section {
     position: relative;
     top: 27em;

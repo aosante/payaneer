@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
-// import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { firebaseConnect } from 'react-redux-firebase';
+import { notifyUser } from '../../actions/notifyActions';
+import Alert from '../layout/Alert';
 import styled from 'styled-components';
 
 const FormContainer = styled.div`
@@ -77,54 +79,66 @@ class Login extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { firebase } = this.props;
+    const { firebase, notifyUser } = this.props;
     const { email, password } = this.state;
     firebase
       .login({
         email,
         password
       })
-      .catch(err => alert('Invalid login brah'));
+      .catch(err => notifyUser('Wrong username or password', 'error'));
   };
   render() {
+    const { message, messageType } = this.props.notify;
     return (
-      <FormContainer>
-        <h1>Welcome to Payoneer</h1>
-        <form onSubmit={this.onSubmit}>
-          <i className="fa fa-user-circle" />
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              name="email"
-              minLength="2"
-              required
-              placeholder="Enter your email"
-              onChange={this.onChange}
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="text"
-              name="password"
-              minLength="2"
-              required
-              placeholder="Enter your password"
-              onChange={this.onChange}
-            />
-          </div>
-          <button type="submit" className="submit-btn">
-            Sign In
-          </button>
-        </form>
-      </FormContainer>
+      <React.Fragment>
+        <FormContainer>
+          <h1>Welcome to Payoneer</h1>
+          <form onSubmit={this.onSubmit}>
+            <i className="fa fa-user-circle" />
+            <div className="input-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                name="email"
+                minLength="2"
+                required
+                placeholder="Enter your email"
+                onChange={this.onChange}
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                minLength="2"
+                required
+                placeholder="Enter your password"
+                onChange={this.onChange}
+              />
+            </div>
+            <button type="submit" className="submit-btn">
+              Sign In
+            </button>
+          </form>
+        </FormContainer>
+        {message ? <Alert message={message} messageType={messageType} /> : null}
+      </React.Fragment>
     );
   }
 }
 
 Login.propTypes = {
-  firebaseConnect: PropTypes.object.isRequired
+  firebaseConnect: PropTypes.object
 };
 
-export default firebaseConnect()(Login);
+export default compose(
+  firebaseConnect(),
+  connect(
+    (state, props) => ({
+      notify: state.notify
+    }),
+    { notifyUser }
+  )
+)(Login);
